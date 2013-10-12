@@ -110,10 +110,11 @@ class MaterializedPathRepository extends AbstractTreeRepository
             }
 
             if ($direct) {
+                $nodeLevel = $meta->getReflectionProperty($tree['level'])->getValue($node);
                 $expr->add(
                     $qb->expr()->orx(
-                        $qb->expr()->eq($alias.'.'.$config['level'], $qb->expr()->literal($node->getPropertyValue($config['level']))),
-                        $qb->expr()->eq($alias.'.'.$config['level'], $qb->expr()->literal($node->getPropertyValue($config['level']) + 1))
+                        $qb->expr()->eq($alias.'.'.$tree['level'], $qb->expr()->literal($nodeLevel)),
+                        $qb->expr()->eq($alias.'.'.$tree['level'], $qb->expr()->literal($nodeLevel + 1))
                     )
                 );
             }
